@@ -1,36 +1,90 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Next.js Docker Deployment
 
-## Getting Started
+This project shows how to run a **Next.js application using Docker** and deploy it on a **cloud server (AWS EC2)** with a basic **GitHub Actions CI workflow**.
 
-First, run the development server:
+---
+
+## Tech Used
+
+* Next.js
+* Docker
+* GitHub Actions
+* AWS EC2 (Ubuntu)
+
+---
+
+## What This Project Does
+
+* Builds a Next.js app
+* Runs it inside a Docker container
+* Uses GitHub Actions to automatically build on every push
+* Deploys and runs the app on an EC2 instance
+
+---
+
+## Run Locally with Docker
+
+Build the image:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+docker build -t next-cloud-demo .
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Run the container:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+docker run -p 3000:3000 next-cloud-demo
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Open:
 
-## Learn More
+```
+http://localhost:3000
+```
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## GitHub Actions
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+A CI pipeline is set up to:
 
-## Deploy on Vercel
+* Trigger on push to `main`
+* Build the Docker image automatically
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Workflow file:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```
+.github/workflows/ci.yml
+```
+
+---
+
+## Cloud Deployment
+
+On the EC2 server:
+
+```bash
+docker run -d -p 3000:3000 next-cloud-demo
+```
+
+Access the app:
+
+```
+http://<EC2_PUBLIC_IP>:3000
+```
+
+---
+
+## Purpose
+
+This project is a **learning demo** to understand:
+
+* Docker basics
+* CI with GitHub Actions
+* Cloud deployment using EC2
+
+---
+
+## Author
+
+Shankar
